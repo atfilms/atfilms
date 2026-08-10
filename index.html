@@ -149,7 +149,7 @@
                 <span style="color: var(--text-secondary); font-size: 0.85rem; font-weight: 600;">RUN TIME: 02:15</span>
               </div>
               
-              <button class="play-trigger-btn" onclick="openDemoReelModal()" aria-label="Play Demo Reel">
+              <button class="play-trigger-btn" onclick="if (typeof openDemoReelModal === 'function') { openDemoReelModal(); }" aria-label="Play Demo Reel">
                 <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
               </button>
 
@@ -164,9 +164,9 @@
         </div>
 
         <div class="reel-tabs">
-          <button class="reel-tab-btn active" onclick="openProjectModal('aura-coffee')">Commercial & Brand Reel</button>
-          <button class="reel-tab-btn" onclick="openProjectModal('vanguard-athletics')">Sports & Action Reel</button>
-          <button class="reel-tab-btn" onclick="openProjectModal('apex-heights')">Architectural & Drone Reel</button>
+          <button class="reel-tab-btn active" onclick="if (typeof openProjectModal === 'function') { openProjectModal('aura-coffee'); }">Commercial & Brand Reel</button>
+          <button class="reel-tab-btn" onclick="if (typeof openProjectModal === 'function') { openProjectModal('vanguard-athletics'); }">Sports & Action Reel</button>
+          <button class="reel-tab-btn" onclick="if (typeof openProjectModal === 'function') { openProjectModal('apex-heights'); }">Architectural & Drone Reel</button>
         </div>
       </div>
     </section>
