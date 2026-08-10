@@ -148,7 +148,16 @@ const PROJECTS_DATA = [
 ];
 
 /* ==========================================================================
-   2. PHOTOGRAPHY GALLERY DATA
+   2. DEMO REEL VIDEO CONFIGURATION
+   ========================================================================== */
+
+const DEMO_REEL_CONFIG = {
+  src: "assets/videos/demo-reel.mp4",
+  poster: "assets/images/hero_cinematic.jpg"
+};
+
+/* ==========================================================================
+   3. PHOTOGRAPHY GALLERY DATA
    ========================================================================== */
 
 const PHOTOGRAPHY_DATA = [
@@ -357,6 +366,45 @@ function initPhotographyGallery() {
 let currentLightboxList = [];
 let currentLightboxIndex = 0;
 
+function openDemoReelModal() {
+  const modal = document.getElementById("project-modal");
+  const videoWrapper = document.getElementById("modal-video-container");
+  const categoryEl = document.getElementById("modal-category");
+  const titleEl = document.getElementById("modal-title");
+  const goalEl = document.getElementById("modal-goal");
+  const roleEl = document.getElementById("modal-role");
+  const deliverablesEl = document.getElementById("modal-deliverables");
+  const descEl = document.getElementById("modal-description");
+  const impactEl = document.getElementById("modal-impact");
+  const btsGalleryEl = document.getElementById("modal-bts-gallery");
+
+  if (!modal || !videoWrapper || !categoryEl || !titleEl || !goalEl || !roleEl || !deliverablesEl || !descEl || !impactEl) return;
+
+  const demoVideoSrc = DEMO_REEL_CONFIG.src || "assets/videos/demo-reel.mp4";
+
+  videoWrapper.innerHTML = `<video src="${demoVideoSrc}" poster="${DEMO_REEL_CONFIG.poster || ''}" controls autoplay playsinline></video>`;
+
+  categoryEl.textContent = "Demo Reel";
+  titleEl.textContent = "Aaditya T. Films — Demo Reel";
+  goalEl.textContent = "A cinematic visual overview of my direction, cinematography, editing, and commercial storytelling capability.";
+  roleEl.textContent = "Director | Cinematographer | Editor | Colorist";
+  descEl.textContent = "This reel brings together visual direction, commercial craft, movement, and atmosphere in a concise story-led format.";
+  impactEl.textContent = "Available for campaigns, commercial work, and narrative brand films.";
+
+  deliverablesEl.innerHTML = `
+    <li>Cinematic short-form brand work</li>
+    <li>Commercial campaign direction</li>
+    <li>Visual storytelling & post-production</li>
+  `;
+
+  if (btsGalleryEl) {
+    btsGalleryEl.innerHTML = `<img src="${DEMO_REEL_CONFIG.poster || 'assets/images/hero_cinematic.jpg'}" alt="Demo reel poster" style="width:100%; height:180px; object-fit:cover; border-radius:8px;" loading="lazy" />`;
+  }
+
+  modal.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
 function initModalsAndLightbox() {
   const projectModal = document.getElementById("project-modal");
   const modalCloseBtn = document.getElementById("modal-close-btn");
@@ -412,7 +460,12 @@ function openProjectModal(projectId) {
   const btsGalleryEl = document.getElementById("modal-bts-gallery");
 
   // Populate data
-  videoWrapper.innerHTML = `<iframe src="${project.videoUrl}" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+  const isLocalVideoFile = project.videoUrl && String(project.videoUrl).toLowerCase().endsWith(".mp4");
+  if (isLocalVideoFile) {
+    videoWrapper.innerHTML = `<video src="${project.videoUrl}" controls autoplay playsinline></video>`;
+  } else {
+    videoWrapper.innerHTML = `<iframe src="${project.videoUrl}" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+  }
   categoryEl.textContent = project.categoryLabel;
   titleEl.textContent = project.title;
   goalEl.textContent = project.goal;
